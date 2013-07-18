@@ -35,6 +35,6 @@ License
     See the License for the specific language governing permissions and
     limitations under the License.
   
- [1]: https://raw.github.com/biboune/TitleEffect/master/graphics/TitleEffect.gif
- [2]: https://raw.github.com/biboune/TitleEffect/master/TiltEffect-release-unsigned.apk
- [3]: https://github.com/biboune/TitleEffect/tree/master/TitleEffect
+ [1]: https://raw.github.com/biboune/TiltEffect/master/graphics/TitlEffect.gif
+ [2]: https://raw.github.com/biboune/TitlEffect/master/TitlEffect-release-unsigned.apk
+ [3]: https://github.com/biboune/TitlEffect/tree/master/TitlEffect
