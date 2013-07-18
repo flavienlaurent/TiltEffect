@@ -17,6 +17,8 @@ Usage
 
 You can see a basic usage [here][3]
 
+Just use this method to make the TiltEffect appears on a view.
+
     TiltEffectAttacher.attach(theViewYouWantToApplyTheTiltEffect)
 
 License
