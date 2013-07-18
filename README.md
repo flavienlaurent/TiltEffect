@@ -15,8 +15,9 @@ Just add the library to your application as a library project.
 Usage
 ---------
 
-To be honest, it's more a first draft than a library !
-Anyway, you can see a basic usage [here][3]
+You can see a basic usage [here][3]
+
+    TiltEffectAttacher.attach(theViewYouWantToApplyTheTiltEffect)
 
 License
 -----------
@@ -37,4 +38,4 @@ License
   
  [1]: https://raw.github.com/biboune/TiltEffect/master/graphics/TiltEffect.gif
  [2]: https://github.com/biboune/TiltEffect/blob/master/TiltEffect-debug-unaligned.apk
- [3]: https://github.com/biboune/TiltEffect/tree/master/TiltEffect
+ [3]: https://github.com/biboune/TiltEffect/blob/master/TiltEffect/src/main/java/com/fourmob/tilteffect/MainActivity.java
