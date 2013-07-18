@@ -36,5 +36,5 @@ License
     limitations under the License.
   
  [1]: https://raw.github.com/biboune/TiltEffect/master/graphics/TiltEffect.gif
- [2]: https://raw.github.com/biboune/TiltEffect/master/TiltEffect-debug-unsigned.apk
+ [2]: https://github.com/biboune/TiltEffect/blob/master/TiltEffect-debug-unaligned.apk
  [3]: https://github.com/biboune/TiltEffect/tree/master/TiltEffect
