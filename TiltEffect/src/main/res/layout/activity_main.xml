@@ -9,14 +9,31 @@
 				tools:context=".MainActivity">
 
 
-	<view
-			android:layout_width="300dp"
-			android:layout_height="300dp"
-			class="com.fourmob.tilteffect.TiltView"
-			android:background="#FF55EE"
-			android:id="@+id/view"
-			android:layout_below="@+id/view"
-			android:layout_centerHorizontal="true"/>
+	<Button
+			android:layout_width="wrap_content"
+			android:layout_height="100dp"
+			android:text="Button with TiltEffect"
+			android:id="@+id/button"
+			android:layout_alignParentTop="true"
+			android:layout_centerHorizontal="true"
+			android:layout_marginTop="34dp"/>
 
+	<ImageView
+			android:layout_width="150dp"
+			android:layout_height="150dp"
+			android:id="@+id/imageView"
+			android:layout_below="@+id/button"
+			android:layout_centerHorizontal="true"
+			android:layout_marginTop="33dp"
+			android:src="@drawable/ic_launcher"
+			android:scaleType="fitCenter"
+			android:background="#FF55EE"/>
 
+	<WebView
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:id="@+id/webView"
+			android:layout_below="@+id/imageView"
+			android:layout_centerHorizontal="true"
+			android:layout_marginTop="13dp"/>
 </RelativeLayout>

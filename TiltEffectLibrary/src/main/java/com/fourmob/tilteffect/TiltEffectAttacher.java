@@ -1,20 +1,18 @@
 package com.fourmob.tilteffect;
 
-import android.content.Context;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
-import com.fourmob.tilteffect.TiltAnimation;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
  * Created by f.laurent on 18/07/13.
  */
-public class TiltView extends View {
+public class TiltEffectAttacher implements View.OnTouchListener {
 
 	enum TouchPart {LEFT, RIGHT, BOTTOM, TOP, TOPLEFT, TOPRIGHT, BOTTOMLEFT, MIDDLE, BOTTOMRIGHT}
 
@@ -26,27 +24,31 @@ public class TiltView extends View {
 
 	private ArrayList<TiltAnimation.Rotation> mLastRotations = new ArrayList<TiltAnimation.Rotation>();
 
-	public TiltView(Context context) {
-		super(context);
+	private WeakReference<View> mView;
+
+	public static final TiltEffectAttacher attach(View view) {
+		return new TiltEffectAttacher(view);
 	}
 
-	public TiltView(Context context, AttributeSet attrs) {
-		super(context, attrs);
+	private TiltEffectAttacher(View view) {
+		this.mView = new WeakReference<View>(view);
+		view.setOnTouchListener(this);
 	}
 
-	public TiltView(Context context, AttributeSet attrs, int defStyle) {
-		super(context, attrs, defStyle);
+	public final void cleanup() {
+		this.mView = null;
 	}
 
 	@Override
-	public boolean onTouchEvent(MotionEvent event) {
+	public boolean onTouch(View v, MotionEvent event) {
+		final View view = mView.get();
 		final int action = event.getAction();
 
 		float x = event.getX();
 		float y = event.getY();
 
-		int height = getHeight();
-		int width = getWidth();
+		int height = view.getHeight();
+		int width = view.getWidth();
 
 		float cornerWidth = width * 0.20f;
 		float cornerHeight = height * 0.20f;
@@ -85,44 +87,44 @@ public class TiltView extends View {
 			Log.d(TAG, "TouchPart has changed : " + mTouchPart);
 			switch (mTouchPart) {
 				case MIDDLE:
-					applyTitlEffect(this, buildResetRotations());
+					applyTitlEffect(view, buildResetRotations());
 					break;
 				case LEFT:
-					applyTitlEffect(this, buildResetRotations(TiltAnimation.ROTATE_AXIS_Y), getLastToDegreesByAxis(TiltAnimation.ROTATE_AXIS_Y), -TILT_VALUE, TiltAnimation.ROTATE_AXIS_Y);
+					applyTitlEffect(view, buildResetRotations(TiltAnimation.ROTATE_AXIS_Y), getLastToDegreesByAxis(TiltAnimation.ROTATE_AXIS_Y), -TILT_VALUE, TiltAnimation.ROTATE_AXIS_Y);
 					break;
 				case RIGHT:
-					applyTitlEffect(this, buildResetRotations(TiltAnimation.ROTATE_AXIS_Y), getLastToDegreesByAxis(TiltAnimation.ROTATE_AXIS_Y), TILT_VALUE, TiltAnimation.ROTATE_AXIS_Y);
+					applyTitlEffect(view, buildResetRotations(TiltAnimation.ROTATE_AXIS_Y), getLastToDegreesByAxis(TiltAnimation.ROTATE_AXIS_Y), TILT_VALUE, TiltAnimation.ROTATE_AXIS_Y);
 					break;
 				case BOTTOM:
-					applyTitlEffect(this, buildResetRotations(TiltAnimation.ROTATE_AXIS_X), getLastToDegreesByAxis(TiltAnimation.ROTATE_AXIS_X), -TILT_VALUE, TiltAnimation.ROTATE_AXIS_X);
+					applyTitlEffect(view, buildResetRotations(TiltAnimation.ROTATE_AXIS_X), getLastToDegreesByAxis(TiltAnimation.ROTATE_AXIS_X), -TILT_VALUE, TiltAnimation.ROTATE_AXIS_X);
 					break;
 				case TOP:
-					applyTitlEffect(this, buildResetRotations(TiltAnimation.ROTATE_AXIS_X), getLastToDegreesByAxis(TiltAnimation.ROTATE_AXIS_X), TILT_VALUE, TiltAnimation.ROTATE_AXIS_X);
+					applyTitlEffect(view, buildResetRotations(TiltAnimation.ROTATE_AXIS_X), getLastToDegreesByAxis(TiltAnimation.ROTATE_AXIS_X), TILT_VALUE, TiltAnimation.ROTATE_AXIS_X);
 					break;
 				case TOPLEFT:
-					applyTitlEffect(this,
+					applyTitlEffect(view,
 							new TiltAnimation.Rotation(TiltAnimation.ROTATE_AXIS_X, getLastToDegreesByAxis(TiltAnimation.ROTATE_AXIS_X), TILT_VALUE),
 							new TiltAnimation.Rotation(TiltAnimation.ROTATE_AXIS_Y, getLastToDegreesByAxis(TiltAnimation.ROTATE_AXIS_Y), -TILT_VALUE));
 					break;
 				case TOPRIGHT:
-					applyTitlEffect(this,
+					applyTitlEffect(view,
 							new TiltAnimation.Rotation(TiltAnimation.ROTATE_AXIS_X, getLastToDegreesByAxis(TiltAnimation.ROTATE_AXIS_X), TILT_VALUE),
 							new TiltAnimation.Rotation(TiltAnimation.ROTATE_AXIS_Y, getLastToDegreesByAxis(TiltAnimation.ROTATE_AXIS_Y), TILT_VALUE));
 					break;
 				case BOTTOMLEFT:
-					applyTitlEffect(this,
+					applyTitlEffect(view,
 							new TiltAnimation.Rotation(TiltAnimation.ROTATE_AXIS_X, getLastToDegreesByAxis(TiltAnimation.ROTATE_AXIS_X), -TILT_VALUE),
 							new TiltAnimation.Rotation(TiltAnimation.ROTATE_AXIS_Y, getLastToDegreesByAxis(TiltAnimation.ROTATE_AXIS_Y), -TILT_VALUE));
 					break;
 				case BOTTOMRIGHT:
-					applyTitlEffect(this,
+					applyTitlEffect(view,
 							new TiltAnimation.Rotation(TiltAnimation.ROTATE_AXIS_X, getLastToDegreesByAxis(TiltAnimation.ROTATE_AXIS_X), -TILT_VALUE),
 							new TiltAnimation.Rotation(TiltAnimation.ROTATE_AXIS_Y, getLastToDegreesByAxis(TiltAnimation.ROTATE_AXIS_Y), TILT_VALUE));
 					break;
 			}
 		}
 
-		return true;
+		return false;
 	}
 
 	private TiltAnimation.Rotation[] buildResetRotations(int... exceptAxises) {
