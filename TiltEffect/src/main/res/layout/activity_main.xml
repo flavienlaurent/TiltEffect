@@ -16,7 +16,6 @@
 			android:background="#FF55EE"
 			android:id="@+id/view"
 			android:layout_below="@+id/view"
-			android:layout_centerVertical="true"
 			android:layout_centerHorizontal="true"/>
 
 
